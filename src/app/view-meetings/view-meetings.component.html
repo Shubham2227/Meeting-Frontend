@@ -1,0 +1,72 @@
+<div class="container">
+    <div class="row mt-5">
+        <div class="col-12 offset-md-1 col-md-10">
+            <div class="card-header border-danger">
+                <h3 class="card-title">
+                    List Of Meetings
+                </h3>
+            </div>
+            <table class="table table-striped mt-5 table-hover">
+                <thead>
+                    <tr>
+                        <td>Meeting Id</td>
+                        <td> Meeting Title</td>
+                        <td> No. Of Attendees</td>
+                        <td> Date </td>
+                        <td> Time </td>
+                        <td> Edit </td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let meeting of meetings; let i=index;">
+                        <td>{{ meeting._id }} </td>
+                        <td> {{ meeting.title }} </td>
+                        <td *ngIf="meeting.attendies"> {{ meeting.attendies.length }} </td>
+                        <td> {{ meeting.date | date : 'mediumDate'}} </td>
+                        <td> {{ meeting.date | date : 'mediumTime' }} </td>
+                        <td> <button type="button" class="btn btn-outline-warning" (click)="openEdit(i)"> Edit </button></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="text-center">
+                <a routerLink="/create-meeting" class="btn btn-primary btn-lg"> Create New Meeting </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel"> Edit Meeting </h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form [formGroup]="editMeetingForm" (ngSubmit)="editMeeting()">
+                <div class="form-group mt-3 px-3">
+                    <label for="title"> Enter Title </label>
+                    <input type="text" formControlName="title" id="title" placeholder="Enter Title" class="form-control">
+                </div>
+                <div class="form-group mt-3 px-3">
+                    <label for="title"> Enter Date and Time </label>
+                    <input type="datetime-local" formControlName="date" id="date" placeholder="Enter Date & Time" class="form-control">
+                </div>
+                <div class="d-flex">
+                    <button class="btn btn-outline-danger ml-auto mr-3" type="reset">
+                        Reset
+                    </button>
+                    <button class="btn btn-success" type="submit">
+                        Submit
+                    </button>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
